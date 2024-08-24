@@ -1,8 +1,9 @@
 import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
 import { findUserByEmail, createUser } from '../database/userQueries.js';
 import { hashPassword, verifyPassword } from '../utils/bcrypt.js';
 
-
+const JWT_SECRET = process.env.JWT_SECRET;
 export const signup = (name, email, password, role) => {
     return new Promise((resolve, reject) => {
         role = role && role.toLowerCase();
@@ -25,8 +26,6 @@ export const signup = (name, email, password, role) => {
 
 export const login = (email, password) => {
     return new Promise((resolve, reject) => {
-      
-
         findUserByEmail(email, async (err, users) => {
             if (err) return reject(err);
             if (users.length === 0) return reject(new Error('User not found'));
@@ -35,7 +34,18 @@ export const login = (email, password) => {
             const isMatch = await verifyPassword(password, user.password);
             if (!isMatch) return reject(new Error('Invalid credentials'));
 
-            resolve({ message: 'User logged in successfully', role: user.role });
+            // Generate JWT token
+            const token = jwt.sign(
+                { id: user.id, role: user.role },
+                JWT_SECRET,
+                { expiresIn: '1h' } // Token expiration time
+            );
+
+            resolve({
+                message: 'User logged in successfully',
+                token, // Include the token in the response
+                role: user.role
+            });
         });
     });
 };
