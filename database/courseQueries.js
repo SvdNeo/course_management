@@ -9,3 +9,8 @@ export const getAllCoursesQuery = (callback) => {
     const query = 'SELECT * FROM Courses';
     connection.query(query, callback);
 };
+
+export const getCourseByIdQuery = (id, callback) => {
+    const query = 'SELECT * FROM Courses WHERE id = ?';
+    connection.query(query, [id], callback);
+    };

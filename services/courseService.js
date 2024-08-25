@@ -1,4 +1,4 @@
-import { createCourseQuery,getAllCoursesQuery } from '../database/courseQueries.js';
+import { createCourseQuery,getAllCoursesQuery,getCourseByIdQuery } from '../database/courseQueries.js';
 
 export const createCourseService = (name, instructor_id, description, price) => {
     return new Promise((resolve, reject) => {
@@ -12,8 +12,19 @@ export const createCourseService = (name, instructor_id, description, price) => 
 export const getAllCoursesService = () => {
     return new Promise((resolve, reject) => {
         getAllCoursesQuery((err, results) => {
-            if (err) return reject(err);
-            resolve(results);
+            if (err) return reject(err.message);
+            if(!results) return reject(new Error('Course not found'));
+            resolve(results.length > 0 ? results[0] : undefined);
         });
     });
 };
+
+export const getCourseByIdService = (id) => {
+    return new Promise((resolve, reject) => {
+        getCourseByIdQuery(id,(err,results)=>{
+            if(err) return reject(err);
+            resolve(results);
+        })
+    })
+        
+}
