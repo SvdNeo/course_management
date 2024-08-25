@@ -14,3 +14,11 @@ export const createCourse = async (req, res) => {
         res.status(400).json({ message: err.message });
     }
 };
+export const getAllCourses = async (req, res) => {
+    try {
+        const courses = await courseService.getAllCoursesService();
+        res.status(200).json(courses);
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+};

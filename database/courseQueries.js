@@ -4,3 +4,8 @@ export const createCourseQuery = (name, instructor_id, description, price, callb
     const query = 'INSERT INTO Courses (name, instructor_id, description, price) VALUES (?, ?, ?, ?)';
     connection.query(query, [name, instructor_id, description, price], callback);
 };
+
+export const getAllCoursesQuery = (callback) => {
+    const query = 'SELECT * FROM Courses';
+    connection.query(query, callback);
+};
