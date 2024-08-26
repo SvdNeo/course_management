@@ -14,7 +14,7 @@ export const getAllCoursesService = () => {
         getAllCoursesQuery((err, results) => {
             if (err) return reject(err.message);
             if(!results) return reject(new Error('Course not found'));
-            resolve(results.length > 0 ? results[0] : undefined);
+            resolve(results[0]);
         });
     });
 };
