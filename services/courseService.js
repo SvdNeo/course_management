@@ -1,4 +1,4 @@
-import { createCourseQuery,getAllCoursesQuery,getCourseByIdQuery } from '../database/courseQueries.js';
+import { createCourseQuery,getAllCoursesQuery,getCourseByIdQuery,editCourseQuery } from '../database/courseQueries.js';
 
 export const createCourseService = (name, instructor_id, description, price) => {
     return new Promise((resolve, reject) => {
@@ -18,6 +18,23 @@ export const getAllCoursesService = () => {
         });
     });
 };
+
+
+
+export const editCourseService = (id, name, instructor_id, description, price) => {
+    return new Promise((resolve, reject) => {
+        editCourseQuery(id, name, instructor_id, description, price, (err, results) => {
+            if (err) return reject(err);
+
+            if (results.affectedRows === 0) {
+                resolve(undefined); 
+            } else {
+                resolve({ id, name, instructor_id, description, price });
+            }
+        });
+    });
+};
+
 
 export const getCourseByIdService = (id) => {
     return new Promise((resolve, reject) => {

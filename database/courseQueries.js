@@ -14,3 +14,10 @@ export const getCourseByIdQuery = (id, callback) => {
     const query = 'SELECT * FROM Courses WHERE id = ?';
     connection.query(query, [id], callback);
     };
+
+
+
+export const editCourseQuery = (id, name, instructor_id, description, price, callback) => {
+    const query = 'UPDATE Courses SET name = ?, instructor_id = ?, description = ?, price = ? WHERE id = ?';
+    connection.query(query, [name, instructor_id, description, price, id], callback);
+};
