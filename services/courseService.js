@@ -1,4 +1,4 @@
-import { createCourseQuery,getAllCoursesQuery,getCourseByIdQuery,editCourseQuery } from '../database/courseQueries.js';
+import { createCourseQuery,getAllCoursesQuery,getCourseByIdQuery,editCourseQuery,deleteCourseQuery } from '../database/courseQueries.js';
 
 export const createCourseService = (name, instructor_id, description, price) => {
     return new Promise((resolve, reject) => {
@@ -44,4 +44,13 @@ export const getCourseByIdService = (id) => {
         })
     })
         
+}
+
+export const deleteCourseService = (id) => {
+    return new Promise((resolve,reject)=>{
+        deleteCourseQuery(id,(err,results)=>{
+            if(err) return reject(err);
+            resolve(results)
+            })
+    })
 }

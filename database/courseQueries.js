@@ -21,3 +21,8 @@ export const editCourseQuery = (id, name, instructor_id, description, price, cal
     const query = 'UPDATE Courses SET name = ?, instructor_id = ?, description = ?, price = ? WHERE id = ?';
     connection.query(query, [name, instructor_id, description, price, id], callback);
 };
+
+export const deleteCourseQuery = (id,callback)=>{
+    const query = 'DELETE FROM Courses WHERE id = ?';
+    connection.query(query,[id],callback)
+}
